@@ -1,6 +1,6 @@
 /* Autor: Yahor Dziamyanenka | Nr indeksu: 77143 */
 
-// --- ZADANIE 4: Interakcja (Zmiana motywu i ukrywanie sekcji) ---
+// ZADANIE 4
 document.getElementById('theme-button').addEventListener('click', () => {
     document.body.classList.toggle('green-theme');
     document.body.classList.toggle('red-theme');
@@ -17,7 +17,7 @@ document.getElementById('toggle-section-button').addEventListener('click', funct
     }
 });
 
-// --- ZADANIE 5 i 8: Walidacja и wysyłanie danych (POST Backend) ---
+//ZADANIE 5 i 8
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     let isValid = true;
@@ -27,7 +27,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     document.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
     document.getElementById('successMsg').style.display = 'none';
 
-    // Walidacja Imienia и Nazwiska (Zadanie 5)
+    // Walidacja Imienia и Nazwiska 
     const checks = [
         { id: 'firstName', msg: 'Imię jest wymagane i nie może zawierać cyfr' },
         { id: 'lastName', msg: 'Nazwisko jest wymagane i nie może zawierać cyfr' }
@@ -53,15 +53,12 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         isValid = false;
     }
 
-    // Jeśli dane są poprawne (Zadanie 8 - Backend POST)
     if (isValid) {
         const endpoint = 'https://webhook.site/4175c255-d8f9-4576-af1c-307c2627b075'; 
-
-        // Tworzymy dynamicznie ukryty formularz, aby 100% ominąć blokady CORS
         const tempForm = document.createElement('form');
         tempForm.method = 'POST';
         tempForm.action = endpoint;
-        tempForm.target = '_blank'; // Otworzy wynik w nowej karcie
+        tempForm.target = '_blank'; 
 
         const formData = {
             firstName: document.getElementById('firstName').value,
@@ -70,7 +67,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             message: document.getElementById('message').value
         };
 
-        // Dodajemy pola do tymczasowego formularza
+       
         for (const key in formData) {
             const input = document.createElement('input');
             input.type = 'hidden';
@@ -91,7 +88,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     }
 });
 
-// --- ZADANIE 6: Pobieranie danych z JSON (fetch) ---
+//ZADANIE 6
 document.addEventListener('DOMContentLoaded', () => {
     fetch('data.json')
         .then(response => {
@@ -121,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error('Błąd JSON:', err));
 });
 
-// --- ZADANIE 7: Local Storage (Notatki) ---
+//ZADANIE 7
 const noteInput = document.getElementById('noteInput');
 const addNoteBtn = document.getElementById('addNoteBtn');
 const notesList = document.getElementById('notesList');
