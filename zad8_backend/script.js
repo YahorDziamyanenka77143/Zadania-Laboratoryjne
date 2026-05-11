@@ -49,7 +49,6 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         isValid = false;
     }
 
-    // Jeśli walidacja (Zadanie 5) przeszła, robimy wysyłkę (Zadanie 8)
     if (isValid) {
         const formData = {
             firstName: document.getElementById('firstName').value,
@@ -58,7 +57,6 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             message: document.getElementById('message').value
         };
 
-        // UWAGA! ZMIEŃ TEN LINK NA SWÓJ Z WEBHOOK.SITE
         const endpoint = 'https://webhook.site/4175c255-d8f9-4576-af1c-307c2627b075'; 
 
         fetch(endpoint, {
@@ -76,7 +74,6 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         })
         .catch(error => {
             console.error('Błąd wysyłania POST:', error);
-            // Ignorujemy błąd CORS dla wideo, pokazujemy sukces
             const successMsg = document.getElementById('successMsg');
             successMsg.style.display = 'block';
             successMsg.textContent = 'Wiadomość wysłana (sprawdź Webhook.site)!';
