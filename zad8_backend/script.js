@@ -29,8 +29,8 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
     // Walidacja Imienia i Nazwiska (Zadanie 5)
     const checks = [
-        { id: 'firstName', msg: 'Imię jest wymagane и nie może zawierać cyfr' },
-        { id: 'lastName', msg: 'Nazwisko jest wymagane и nie może zawierać cyfr' }
+        { id: 'firstName', msg: 'Imię jest wymagane i nie może zawierać cyfr' },
+        { id: 'lastName', msg: 'Nazwisko jest wymagane i nie może zawierać cyfr' }
     ];
 
     checks.forEach(check => {
@@ -55,23 +55,19 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
     // Jeśli dane są poprawne (Zadanie 8)
     if (isValid) {
-        const formData = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            message: document.getElementById('message').value
-        };
+        const formData = new FormData();
+        formData.append('firstName', document.getElementById('firstName').value);
+        formData.append('lastName', document.getElementById('lastName').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('message', document.getElementById('message').value);
 
-        // ТВОЯ ССЫЛКА С WEBHOOK.SITE
+        // Twój link z Webhook.site (zaktualizowany na podstawie screena)
         const endpoint = 'https://webhook.site/4175c255-d8f9-4576-af1c-307c2627b075'; 
 
         fetch(endpoint, {
             method: 'POST',
-            mode: 'no-cors', // Zapobiega blokowaniu przez CORS
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
+            mode: 'no-cors', // Omija błędy CORS
+            body: formData
         })
         .then(() => {
             const successMsg = document.getElementById('successMsg');
@@ -80,7 +76,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             document.getElementById('contactForm').reset();
         })
         .catch(error => {
-            console.error('Błąd POST:', error);
+            console.error('Błąd wysyłania:', error);
         });
     }
 });
