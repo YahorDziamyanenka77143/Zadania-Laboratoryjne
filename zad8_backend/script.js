@@ -17,7 +17,7 @@ document.getElementById('toggle-section-button').addEventListener('click', funct
     }
 });
 
-// --- ZADANIE 5 i 8: Walidacja i wysyłanie danych (POST) ---
+// --- ZADANIE 5 i 8: Walidacja и wysyłanie danych (POST) ---
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     let isValid = true;
@@ -27,7 +27,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     document.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
     document.getElementById('successMsg').style.display = 'none';
 
-    // Walidacja Imienia i Nazwiska (Zadanie 5)
+    // Walidacja Imienia и Nazwiska (Zadanie 5)
     const checks = [
         { id: 'firstName', msg: 'Imię jest wymagane i nie może zawierać cyfr' },
         { id: 'lastName', msg: 'Nazwisko jest wymagane i nie może zawierać cyfr' }
@@ -53,30 +53,36 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         isValid = false;
     }
 
-    // Jeśli dane są poprawne (Zadanie 8)
+    // Jeśli dane są poprawne (Zadanie 8 - Backend POST)
     if (isValid) {
-        const formData = new FormData();
-        formData.append('firstName', document.getElementById('firstName').value);
-        formData.append('lastName', document.getElementById('lastName').value);
-        formData.append('email', document.getElementById('email').value);
-        formData.append('message', document.getElementById('message').value);
+        // Używamy URLSearchParams, aby stworzyć "prosty" запрос (Simple Request)
+        const params = new URLSearchParams();
+        params.append('firstName', document.getElementById('firstName').value);
+        params.append('lastName', document.getElementById('lastName').value);
+        params.append('email', document.getElementById('email').value);
+        params.append('message', document.getElementById('message').value);
 
-        // Twój link z Webhook.site (zaktualizowany na podstawie screena)
+        // Twój endpoint z Webhook.site
         const endpoint = 'https://webhook.site/4175c255-d8f9-4576-af1c-307c2627b075'; 
 
         fetch(endpoint, {
             method: 'POST',
-            mode: 'no-cors', // Omija błędy CORS
-            body: formData
+            mode: 'no-cors', // Kluczowe dla ominięcia blokady CORS przy nagrywaniu wideo
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params
         })
         .then(() => {
+            // Przy no-cors przeglądarka nie da nam odczytać odpowiedzi, 
+            // ale dane i tak dotrą na serwer.
             const successMsg = document.getElementById('successMsg');
             successMsg.style.display = 'block';
             successMsg.textContent = 'Wiadomość została wysłana na serwer (POST)!';
             document.getElementById('contactForm').reset();
         })
         .catch(error => {
-            console.error('Błąd wysyłania:', error);
+            console.error('Błąd wysyłania POST:', error);
         });
     }
 });
