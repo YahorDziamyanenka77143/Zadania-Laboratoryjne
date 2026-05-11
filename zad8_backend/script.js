@@ -77,10 +77,9 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
         }
 
         document.body.appendChild(tempForm);
-        tempForm.submit(); // Wysyłka POST
+        tempForm.submit(); 
         document.body.removeChild(tempForm);
 
-        // Komunikat o sukcesie na stronie CV
         const successMsg = document.getElementById('successMsg');
         successMsg.style.display = 'block';
         successMsg.textContent = 'Dane zostały wysłane do serwera (POST)!';
