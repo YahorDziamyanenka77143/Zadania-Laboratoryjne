@@ -17,7 +17,7 @@ document.getElementById('toggle-section-button').addEventListener('click', funct
     }
 });
 
-// --- ZADANIE 5 i 8: Walidacja и wysyłanie danych (POST) ---
+// --- ZADANIE 5 i 8: Walidacja и wysyłanie danych (POST Backend) ---
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     let isValid = true;
@@ -55,39 +55,43 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 
     // Jeśli dane są poprawne (Zadanie 8 - Backend POST)
     if (isValid) {
-        // Używamy URLSearchParams, aby stworzyć "prosty" запрос (Simple Request)
-        const params = new URLSearchParams();
-        params.append('firstName', document.getElementById('firstName').value);
-        params.append('lastName', document.getElementById('lastName').value);
-        params.append('email', document.getElementById('email').value);
-        params.append('message', document.getElementById('message').value);
-
-        // Twój endpoint z Webhook.site
         const endpoint = 'https://webhook.site/4175c255-d8f9-4576-af1c-307c2627b075'; 
 
-        fetch(endpoint, {
-            method: 'POST',
-            mode: 'no-cors', // Kluczowe dla ominięcia blokady CORS przy nagrywaniu wideo
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params
-        })
-        .then(() => {
-            // Przy no-cors przeglądarka nie da nam odczytać odpowiedzi, 
-            // ale dane i tak dotrą na serwer.
-            const successMsg = document.getElementById('successMsg');
-            successMsg.style.display = 'block';
-            successMsg.textContent = 'Wiadomość została wysłana na serwer (POST)!';
-            document.getElementById('contactForm').reset();
-        })
-        .catch(error => {
-            console.error('Błąd wysyłania POST:', error);
-        });
+        // Tworzymy dynamicznie ukryty formularz, aby 100% ominąć blokady CORS
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = endpoint;
+        tempForm.target = '_blank'; // Otworzy wynik w nowej karcie
+
+        const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
+
+        // Dodajemy pola do tymczasowego formularza
+        for (const key in formData) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = formData[key];
+            tempForm.appendChild(input);
+        }
+
+        document.body.appendChild(tempForm);
+        tempForm.submit(); // Wysyłka POST
+        document.body.removeChild(tempForm);
+
+        // Komunikat o sukcesie na stronie CV
+        const successMsg = document.getElementById('successMsg');
+        successMsg.style.display = 'block';
+        successMsg.textContent = 'Dane zostały wysłane do serwera (POST)!';
+        this.reset();
     }
 });
 
-// --- ZADANIE 6: Pobieranie danych z JSON ---
+// --- ZADANIE 6: Pobieranie danych z JSON (fetch) ---
 document.addEventListener('DOMContentLoaded', () => {
     fetch('data.json')
         .then(response => {
