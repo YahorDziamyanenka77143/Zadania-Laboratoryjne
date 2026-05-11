@@ -1,0 +1,12 @@
+{
+  "skills": [
+    "<strong>Języki obce:</strong> polski, rosyjski, białoruski, niemiecki, angielski, litewski",
+    "<strong>Programowanie:</strong> znajomość języka C# (Windows Forms)",
+    "<strong>Hardware:</strong> zaawansowana wiedza w zakresie budowy i diagnostyki sprzętu PC",
+    "<strong>Kompetencje miękkie:</strong> praca w zespole, samodyscyplina sportowa"
+  ],
+  "projects": [
+    "<strong>Aplikacja narzędziowa w C#:</strong> Projekt Windows Forms.",
+    "<strong>Custom PC Build:</strong> Projekt i montaż zaawansowanej jednostki komputerowej."
+  ]
+}
